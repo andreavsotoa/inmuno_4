@@ -18,5 +18,6 @@ class AddCamposToUsuarios < ActiveRecord::Migration
     add_column :usuarios, :asp, :integer
     add_column :usuarios, :blom, :integer
     add_column :usuarios, :rol, :integer
+    add_column :usuarios, :fecha_pruebas, :string
   end
 end

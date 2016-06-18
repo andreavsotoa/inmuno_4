@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(version: 20160301233139) do
     t.integer  "asp"
     t.integer  "blom"
     t.integer  "rol"
+    t.string   "fecha_pruebas"
     t.string   "invitation_token"
     t.datetime "invitation_created_at"
     t.datetime "invitation_sent_at"
@@ -165,7 +166,6 @@ ActiveRecord::Schema.define(version: 20160301233139) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.integer  "invitations_count",      default: 0
-    t.string   "fecha_pruebas"
     t.text     "frascos"
   end
 

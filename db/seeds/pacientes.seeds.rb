@@ -30,7 +30,7 @@ end
 
       frascos = Frascos.new()
 
-       #for fila in (4 .. ex.last_row)
+      for fila in (4 .. ex.last_row)
        #for fila in (4 .. 77)
         puts "FILA = #{fila} ANALIZANDO USUARIO =#{ex.cell(fila,1).to_s.sub('.0','')}" 
 
@@ -115,5 +115,5 @@ end
               u.save(validate: false)
            end
 
-        
+        end
         end      

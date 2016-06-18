@@ -36,24 +36,27 @@ devise_scope :usuario do
   get 'adminHome', :action => 'adminHome', :controller => 'registrations', :as => 'adminHome'
 
   get 'registrations/pacientes/:id/edit' => 'registrations#editPaciente', :as => "edit_paciente_registration"
+  get 'registrations/editPrueba/:id' => 'registrations#editPrueba', :as => "edit_prueba_registration" 
   patch 'registrations/pacientes(.:format)'=> "registrations#update"
   put 'registrations/pacientes(.:format)'=> "registrations#update"
 
 
-put 'usuarios/pacientes(.:format)'=> "registrations#update"
+  put 'usuarios/pacientes(.:format)'=> "registrations#update"
 ##'usuarios/edit_paciente', :to => 'registration#edit_paciente'
 end
 
 #patch 'registrations/editPaciente/:id(.:format)'=> "registrations#update"
 
 
-devise_for :usuarios, controllers: {registrations: "registrations", sessions: "sessions"}
+devise_for :usuarios, controllers: {registrations: "registrations", sessions: "sessions", registrations_prueba_alergica: "registrations_prueba_alergica"}
   
 mount Ckeditor::Engine => '/ckeditor'
 
-  devise_scope :usuarios do
-    get 'usuarios/edit_paciente', :to => 'registration#edit_paciente'
-  end
+##  devise_scope :usuarios do
+ #   get 'usuarios/edit_paciente', :to => 'registration#edit_paciente'
+ #   get 'usuarios/edit_prueba', :to => 'registration#edit_prueba'
+
+ # end
 
 #resources :usuarios, only: [:index]
 
