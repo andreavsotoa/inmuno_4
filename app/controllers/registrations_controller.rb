@@ -44,6 +44,18 @@ end
 def editPrueba
   puts "ESTOY EN EDIT PRUEBA"
   @paciente = Usuario.find(params[:id])
+  #puts @paciente
+  #puts "FRASCOS"
+  build_resource({})
+  self.resource = @paciente
+  #render :editPaciente  
+end
+
+def showFrascos
+  puts "ESTOY EN SHOW FRASCOS"
+  @paciente = Usuario.find(params[:id])
+  #puts @paciente
+  #puts "FRASCOS"
   build_resource({})
   self.resource = @paciente
   #render :editPaciente  

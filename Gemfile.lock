@@ -197,8 +197,8 @@ GEM
     fog-xml (0.1.2)
       fog-core
       nokogiri (~> 1.5, >= 1.5.11)
-    font-awesome-sass (4.3.2.1)
-      sass (~> 3.2)
+    font-awesome-sass (4.6.2)
+      sass (>= 3.2)
     formatador (0.2.5)
     gibbon (1.2.0)
       httparty
@@ -361,7 +361,7 @@ DEPENDENCIES
   devise_invitable (~> 1.5.2)
   figaro
   fog
-  font-awesome-sass (~> 4.3.0)
+  font-awesome-sass (~> 4.6.2)
   gibbon
   jbuilder (~> 2.0)
   jquery-rails

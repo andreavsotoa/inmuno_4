@@ -1,0 +1,76 @@
+
+<%puts "VISTA _PACIENTES.HTML.ERB"%> 
+
+<%if !flash.now[:alert].blank? %>
+
+<div class="row">
+          <div class="col-lg-12">
+            <%# flash.each do |key, value| %>
+            <div class="alert alert-success fade in">
+              <a class="close" data-dismiss="alert" href="#">&times;</a>
+              <strong><%#=value%><%=flash.now[:alert]%>
+              </strong>
+            </div><%# end %>
+          </div>
+        </div><!-- /.row -->
+<%end%>
+
+
+<%if !@pacientes.nil? %>
+
+<div class="table-responsive" style="height:360px"> 
+    <table class="table table-striped table-hover" >
+        <thead >
+            <tr >
+                <th>Número</th>
+                <th>Cédula</th>
+                <th>Apellido y Nombre</th>
+                <th style="text-align: center">Listado Frascos</th>
+            </tr>
+        </thead>
+        <tbody style="overflow-y: scroll;height: auto; width:100%">
+
+  	<% @pacientes.each_with_index do |paciente,i| %>
+            <tr>
+                <td><%=paciente.numero_excel%></td>
+                <td><%=paciente.cedula%></td>
+                <td><%=paciente.apellido + ", "+ paciente.nombre%></td>
+         <td><%#= AQUI LO TENGO QUE REDIRIGIR A LA VIEW DE FRASCOS), remote: true do %>
+          <div align="center">
+          <%=link_to show_frascos_registration_path(paciente),
+              title: 'Histórico de Frascos',
+               'data-toggle' => 'tooltip',
+               'data-placement' => 'right' do %>
+              <span class="fa fa-fw fa-pencil"></span>
+              <%end%>
+        </div>
+        </td>
+
+        </tr>
+      <%end%>
+
+        </tbody>
+    </table>
+</div>
+
+
+
+<!--el siguiente código coloca la páginación sin estilos -->
+<div id="page_links">
+    <%#= paginate @pacientes %>
+</div>
+
+<!-- la siguiente instrucción carga la páginación con bootstrap-->
+
+<div style="text-align:center">
+<%= js_will_paginate @pacientes, {page: params[:page], per_page: 5} %>
+</div>
+<!-- o también
+
+<%#= js_will_paginate @pacientes %>
+
+
+<%end%>
+
+
+ 

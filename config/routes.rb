@@ -5,6 +5,7 @@ Rails.application.routes.draw do
        collection do
              get :buscar
              get :buscar_paciente
+             get :buscarFrasco
        end
     end   
 
@@ -42,13 +43,17 @@ devise_scope :usuario do
 
 
   put 'usuarios/pacientes(.:format)'=> "registrations#update"
+
+  get 'registrations/showFrascos/:id' => 'registrations#showFrascos', :as => "show_frascos_registration" 
+
+  #get 'consulting/show/:id' => 'consultings#show', :as => "frascos_consulting" 
 ##'usuarios/edit_paciente', :to => 'registration#edit_paciente'
 end
 
 #patch 'registrations/editPaciente/:id(.:format)'=> "registrations#update"
 
 
-devise_for :usuarios, controllers: {registrations: "registrations", sessions: "sessions", registrations_prueba_alergica: "registrations_prueba_alergica"}
+devise_for :usuarios, controllers: {registrations: "registrations", sessions: "sessions"}
   
 mount Ckeditor::Engine => '/ckeditor'
 

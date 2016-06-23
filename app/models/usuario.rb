@@ -4,7 +4,7 @@ class Usuario < ActiveRecord::Base
   #devise :invitable, :database_authenticatable, :registerable,
   #       :recoverable, :rememberable, :trackable, :validatable
 
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
+devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 attr_accessor :saltar_validacion_usuario, :validar_usuario_nuevo
 
 has_many :faqs
