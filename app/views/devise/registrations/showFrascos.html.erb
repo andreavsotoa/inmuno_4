@@ -25,14 +25,21 @@
               </div>
               <div class="panel-body">
                 <ul class="list-group">
-                  <li class="list-group-item">Nombre:
-                  <%=current_usuario.nombre%>
-                  </li>
-                  <li class="list-group-item">Apellido:
-                  <%=current_usuario.apellido%>
-                  </li>
-                  <li class="list-group-item">Frascos:
-                  <%=current_usuario.frascos%>
+                  <li class="list-group-item">
+                  <table class="table table-condensed">
+                  <tr>
+                  <% @hash_frascos.each do |frasco,fechas| %>
+                     <tr>
+                    <td><strong>Frasco:</strong></td>
+                    <td><%=frasco%></td>
+                    <td><strong>Fecha de Solicitud:</strong></td>
+                    <td><%= humanizarFecha Date.parse (fechas[:fecha_solicitud])%></td>  
+                    <td><strong>Fecha de Retiro:</strong></td>
+                    <td><%= humanizarFecha Date.parse (fechas[:fecha_retiro])%></td>                    
+                    </tr>
+                  <%end%>                   
+                  </tr>
+                  </table>
                   </li>
 
                 </ul>
@@ -47,7 +54,7 @@
         <div class="row">
            <div class="col-sm-3"></div>
           <div class="col-sm-5">
-            <%=link_to 'Regresar', admin_path %>
+            <%=link_to 'Regresar', buscarFrasco_administrator_pacientes_path %>
           </div>
           <div class="col-sm-3"></div>
         </div><!-- /.row -->
@@ -64,7 +71,7 @@
               <div class="panel-heading">
                 <h3 class="panel-title"></h3>
                 <div style="text-align: center">
-                  <h3 class="panel-title">Histórico de Frascos</h3>
+                  <h3 class="panel-title"><%="Histórico Frascos: "+@paciente.nombre+" "+@paciente.apellido%></h3>
                 </div>
               </div>
               <div class="panel-body">
@@ -72,22 +79,16 @@
                   <li class="list-group-item">
                   <table class="table table-condensed">
                   <tr>
-                    <td><strong>Historia:</strong></td>
-                    <td><%=@paciente.historia%></td>
-                    <td><strong>Nombre de usuario:</strong></td>
-                    <td><%=@paciente.username%></td>
-                  </tr>
-                  <tr>
-                    <td><strong>Nombres:</strong></td>
-                    <td><%=@paciente.nombre%></td>
-                    <td><strong>Apellidos:</strong></td>
-                    <td><%=@paciente.apellido%></td>                    
-                  </tr>
-                  <tr>
-                    <td><strong>C.I.:</strong></td>
-                    <td><%=@paciente.cedula%></td>
-                    <td><strong>Frascos:</strong></td>
-                    <td><%=@paciente.frascos%></td>                    
+                  <% @hash_frascos.each do |frasco,fechas| %>
+                     <tr>
+                    <td><strong>Frasco:</strong></td>
+                    <td><%=frasco%></td>
+                    <td><strong>Fecha de Solicitud:</strong></td>
+                    <td><%=fechas[:fecha_solicitud]%></td>  
+                    <td><strong>Fecha de Retiro:</strong></td>
+                    <td><%=fechas[:fecha_retiro]%></td>                    
+                    </tr>
+                  <%end%>                   
                   </tr>
                   </table>
                   </li>
@@ -102,7 +103,7 @@
         <div class="row">
            <div class="col-sm-3"></div>
           <div class="col-sm-6">
-            <%=link_to 'Regresar', usuarios_list_path%>
+            <%=link_to 'Regresar', buscarFrasco_administrator_pacientes_path%>
           </div>
           <div class="col-sm-3"></div>
         </div><!-- /.row -->

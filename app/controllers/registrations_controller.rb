@@ -54,8 +54,22 @@ end
 def showFrascos
   puts "ESTOY EN SHOW FRASCOS"
   @paciente = Usuario.find(params[:id])
-  #puts @paciente
-  #puts "FRASCOS"
+  puts "FRASCOS DEL PACIENTE"
+  # EN @FRASCO ESTAN TANTOS STRINGS COMO FRASCOS TIENE EL PACIENTE
+  @hash_frascos = {}
+  if @paciente.frascos != nil
+  lista_frascos = @paciente.frascos.split('$')
+  lista_frascos.each do |frasco,i|
+    detalle_frasco = frasco.split('#')
+    detalle = {:fecha_solicitud => detalle_frasco[1],:fecha_retiro => detalle_frasco[2]}
+    num_frasco = detalle_frasco[0]
+    if num_frasco != nil
+      @hash_frascos[num_frasco.to_s] = detalle
+    end
+  end
+  #puts hash['1'][:fecha_solicitud]
+  end
+  puts @hash_frascos
   build_resource({})
   self.resource = @paciente
   #render :editPaciente  
@@ -65,6 +79,46 @@ end
 def update
   puts "UPDATE"
   puts params[:usuario][:id]
+  puts "OCULTO"
+  puts params[:usuario][:origen]
+  if "editPrueba".eql? params[:usuario][:origen]
+    puts "CAI EN EL IF"
+     @paciente = Usuario.find(params[:usuario][:id])
+  if @paciente != current_usuario
+    @numero_paciente = Usuario.last.numero_excel.to_i + 1
+    #estado = 1 PENDIENTE
+    params[:usuario][:estado] = 1
+    #if params[:usuario][:ava].blank? and 
+     # params[:usuario][:cuc].blank? and 
+      #params[:usuario][:hong].blank? and 
+      #params[:usuario][:berm].blank? and
+      #params[:usuario][:john].blank? and
+      #params[:usuario][:aso].blank? and
+      #params[:usuario][:blom].blank?  
+      #params[:usuario][:fecha_pruebas] = nil     
+    #end
+
+    @paciente = Usuario.find(params[:usuario][:id])
+    self.resource = @paciente
+    self.resource.saltar_validacion_usuario = false
+    #self.resource.validar_usuario_nuevo = false
+    #self.resource.skip_confirmation!
+
+  if self.resource.update_without_password(account_update_params)
+        flash.now[:notice] = "Las pruebas alérgicas del paciente fueron modificadas correctamente"
+        redirect_to usuario_registration_path(@paciente.id)
+        #format.json { head :no_content }
+      else
+        #format.html { render :editPaciente }
+        puts "ELSE DEL IF"
+        render :editPaciente
+        #format.json { render json: @paciente.errors, status: :unprocessable_entity }
+      end
+    #end
+    
+
+  end 
+  else
   @paciente = Usuario.find(params[:usuario][:id])
   if @paciente != current_usuario
     @numero_paciente = Usuario.last.numero_excel.to_i + 1
@@ -106,7 +160,8 @@ def update
       end
     end
     #end
-  end  
+  end 
+  end 
 end 
 
 def create
@@ -225,6 +280,21 @@ params.require(:usuario).permit(
            :email2, 
            :email2_confirmation,
            :fecha_nacimiento, 
+           :ava,
+           :cuc,
+           :hong,
+           :berm,
+           :john,
+           :asp,
+           :blom,
+           :rol,
+           :fecha_pruebas)
+end
+
+def pruebas_update_params
+  puts params[:usuario][:nombre]
+
+params.require(:usuario).permit(
            :ava,
            :cuc,
            :hong,

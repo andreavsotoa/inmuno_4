@@ -183,7 +183,6 @@ def adminHome
     render 'devise/registrations/show' 
 end
 
-
 private
 
 
@@ -311,7 +310,4 @@ end
   def after_update_path_for(resource)
     adminHome_path(resource)
   end
-
-
-
 end

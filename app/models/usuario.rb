@@ -52,7 +52,7 @@ validates :email_confirmation, presence: {message: "Debe colocar la confirmació
              if: ":validar_usuario_nuevo"
 
 validates :email, confirmation: { message: "El correo principal no coincide con su confirmación"},
-            if: ":validar_usuario_nuevo"
+            unless: :saltar_validacion_usuario
 
 validates :email2, allow_blank: true, 
                    format: {:with => VALID_EMAIL_REGEX, 

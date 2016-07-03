@@ -29,6 +29,7 @@
                   <%#= simple_form_for(resource, as: resource_name, url: edit_paciente_registration_path(@paciente), html: { method: :put, class: 'form-horizontal' }) do |f| %>
                   <%puts "AQUI15"%>
                    <%=f.input :id, :as => :hidden, :input_html => { :value => @paciente.id } %>
+                   <%=f.input :origen, :as => :hidden, :input_html => { :value => "editPrueba" } %>
                      
                      <%= f.error_notification %>
 
