@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  
   namespace :administrator do
     resource :pacientes do
        collection do
@@ -106,8 +105,9 @@ root 'pages#home'
 
 
 
-#nuevas rutas del proyecto para la materia
-get 'ejemplo1' => 'paciente/pacientes#index'
-
-
+  #nuevas rutas del proyecto para la materia
+  get 'ejemplo1' => 'paciente/pacientes#index'
+  get 'vacunas/listar'
+  get 'vacunas/solicitar'
+  get 'vacunas/pagar'
 end

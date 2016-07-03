@@ -1,0 +1,43 @@
+<div id="page-wrapper" style="padding:50px 0">
+  <div class="container-fluid">
+    <%= render 'shared/menu_paciente', tituloVentana: 'Listado de Frascos' %>
+
+    <div class="row">
+      <div class="col-lg-6 col-lg-offset-3">
+        <%= link_to 'Solicitar Frasco', vacunas_solicitar_path, class: 'btn btn-primary' %>
+      </div>
+    </div>
+
+    <div class="row" style="padding-top:25px">
+      <div class="col-lg-6 col-lg-offset-3">
+        <div class="panel-group">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h4 class="panel-title">Frascos</h4>
+            </div>
+            <div class="panel-body">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Nmero de Frasco</th>
+                    <th>Fecha de Retiro</th>
+                    <th>Fecha de Solicitud</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @frascos.each do |frasco| %>
+                    <tr>
+                      <td><%= frasco[:numero] %></td>
+                      <td><%= frasco[:fecha_retiro] %></td>
+                      <td><%= frasco[:fecha_solicitud] %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
