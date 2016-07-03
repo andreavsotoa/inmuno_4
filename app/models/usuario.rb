@@ -48,19 +48,17 @@ class Usuario < ActiveRecord::Base
 
   #validates :email, uniqueness: {message: "El correo ya se encuentra registrado"}
 
-  validates :email_confirmation, presence: {message: "Debe colocar la confirmación del correo principal"},
-               if: ":validar_usuario_nuevo"
+  validates :email_confirmation, presence: { message: 'Debe colocar la confirmación del correo principal' }, if: 'validar_usuario_nuevo'
 
-  validates :email, confirmation: { message: "El correo principal no coincide con su confirmación"},
-              if: ":validar_usuario_nuevo"
+  validates :email, confirmation: { message: 'El correo principal no coincide con su confirmación' }, if: 'validar_usuario_nuevo'
 
   validates :email2, allow_blank: true,
                      format: {:with => VALID_EMAIL_REGEX,
                               message: "El formato del correo electrónico alternativo es invalido"}
 
-  validates :email2_confirmation, presence: {message: "Debe colocar la confirmación del correo alternativo"}, if: ":validar_usuario_nuevo and !email2.blank?"
+  validates :email2_confirmation, presence: { message: 'Debe colocar la confirmación del correo alternativo' }, if: 'validar_usuario_nuevo and !email2.blank?'
 
-  validates :email2, confirmation: {message: "El correo alternativo no coincide con su confirmación"}, if: ":validar_usuario_nuevo and !email2.blank?"
+  validates :email2, confirmation: { message: 'El correo alternativo no coincide con su confirmación' }, if: 'validar_usuario_nuevo and !email2.blank?'
 
   validate :presencia_de_algun_telefono, unless: :saltar_validacion_usuario
 
@@ -182,6 +180,19 @@ class Usuario < ActiveRecord::Base
 
   def tiene_todas_las_pruebas_alergicas?
     !(ava.nil? || cuc.nil? || hong.nil? || berm.nil? || john.nil? || asp.nil? || blom.nil?)
+  end
+
+  def agregar_frascos(nuevos_frascos)
+    i = frascos.size
+    lista_frascos = []
+    nuevos_frascos.each do |frasco|
+      i += 1
+      nuevo_frasco = { numero: i }
+      nuevo_frasco [:fecha_retiro]
+      nuevo_frasco [:fecha_solicitud]
+      nuevo_frasco [:estado]
+      lista_frascos << nuevo_frasco
+    end
   end
 
   private
