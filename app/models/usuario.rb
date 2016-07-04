@@ -5,7 +5,7 @@ class Usuario < ActiveRecord::Base
   #       :recoverable, :rememberable, :trackable, :validatable
 
 devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
-attr_accessor :saltar_validacion_usuario, :validar_usuario_nuevo
+attr_accessor :saltar_validacion_usuario, :validar_usuario_nuevo,:saltar_validacion_correo_principal,:saltar_validacion_fecha_nacimiento
 
 has_many :faqs
 has_many :tips
@@ -40,25 +40,25 @@ validates :cedula, allow_blank: true, format: {with: /\A\d+\z/, message: "El nú
                             too_long: "debe tener máximo 10 números"}, if: "!cedula.blank?"
 
 validates :fecha_nacimiento, presence: {message: "Debe colocar la fecha de nacimiento del paciente"},
-                                         unless: :saltar_validacion_usuario
+                                         unless: :saltar_validacion_usuario, if: :saltar_validacion_fecha_nacimiento
 
 VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 validates :email, presence: {message: "Debe colocar su correo electrónico"},
-                  format:{:with => VALID_EMAIL_REGEX, message: "El formato del correo electrónico es invalido"}
+                  format:{:with => VALID_EMAIL_REGEX, message: "El formato del correo electrónico es invalido"}, if: "saltar_validacion_correo_principal"
 
 #validates :email, uniqueness: {message: "El correo ya se encuentra registrado"}
 
-validates :email_confirmation, presence: {message: "Debe colocar la confirmación del correo principal"}, 
-             if: ":validar_usuario_nuevo"
+validates :email_confirmation, presence: {message: "Debe colocar la confirmación del correo principal"},
+             if: ":validar_usuario_nuevo", if: "saltar_validacion_correo_principal"
 
 validates :email, confirmation: { message: "El correo principal no coincide con su confirmación"},
-            unless: :saltar_validacion_usuario
+               if: ":validar_usuario_nuevo"
 
 validates :email2, allow_blank: true, 
                    format: {:with => VALID_EMAIL_REGEX, 
                             message: "El formato del correo electrónico alternativo es invalido"}
 
-validates :email2_confirmation, presence: {message: "Debe colocar la confirmación del correo alternativo"}, if: ":validar_usuario_nuevo and !email2.blank?"
+validates :email2_confirmation, presence: {message: "Debe colocar la confirmación del correo alternativo"}, if: ":validar_usuario_nuevo and !email2.blank?", if: "saltar_validacion_correo_principal"
 
 validates :email2, confirmation: {message: "El correo alternativo no coincide con su confirmación"}, if: ":validar_usuario_nuevo and !email2.blank?"
 
@@ -182,5 +182,4 @@ end
 
 
 end
-
 

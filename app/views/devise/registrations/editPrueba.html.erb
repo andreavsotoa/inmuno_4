@@ -33,6 +33,20 @@
                      
                      <%= f.error_notification %>
 
+                      <% if @paciente.errors.any? %>
+                    <div class="alert alert-danger">
+                    <div class="error_explanation">
+                      <ul>
+                        <% resource.errors.each do |attr,msg| %>
+                        <li><%= "#{msg}" if @usuario.errors[attr].first == msg %> </li>
+                       <% end %>
+                   
+                      </ul>
+                   
+                    </div>
+                  </div>
+                  <% end %>
+
                      <div id="pruebas" >
   <br />
   <div class="form-group">

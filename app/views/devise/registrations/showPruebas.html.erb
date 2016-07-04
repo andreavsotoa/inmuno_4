@@ -96,7 +96,7 @@
                   <tr>
                     <td><strong>Nombres:</strong></td>
                     <td><%=@paciente.nombre%></td>
-                    <td><strong>apellidos:</strong></td>
+                    <td><strong>Apellidos:</strong></td>
                     <td><%=@paciente.apellido%></td>                    
                   </tr>
                   <tr >
@@ -151,8 +151,7 @@
         <div class="row">
            <div class="col-sm-3"></div>
           <div class="col-sm-6">
-            <%= link_to 'Modificar', edit_paciente_registration_path(@paciente) %> |
-            <%=link_to 'Regresar', usuarios_list_path%>
+            <%=link_to 'Regresar', buscar_administrator_pacientes_path%>
           </div>
           <div class="col-sm-3"></div>
         </div><!-- /.row -->

@@ -33,6 +33,7 @@ end
  
 devise_scope :usuario do
   get 'usuarios' => 'registrations#show', :as => "usuario_registration"
+  get 'usuarios' => 'registrations#showPruebas', :as => "usuario_registration_pruebas"
   get 'usuarios/index', :to => 'registrations#index', :as => :usuarios_list
   get 'adminHome', :action => 'adminHome', :controller => 'registrations', :as => 'adminHome'
 

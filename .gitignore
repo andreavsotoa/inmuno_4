@@ -1,0 +1,14 @@
+/log
+/tmp
+
+## Environment normalization:
+/.bundle
+
+# Ignore Byebug command history file.
+/.byebug_history
+
+# Archivos de sublime
+/*.sublime-*
+
+# Archivos temporales
+*~

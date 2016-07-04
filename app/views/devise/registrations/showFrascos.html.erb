@@ -33,9 +33,9 @@
                     <td><strong>Frasco:</strong></td>
                     <td><%=frasco%></td>
                     <td><strong>Fecha de Solicitud:</strong></td>
-                    <td><%= humanizarFecha Date.parse (fechas[:fecha_solicitud])%></td>  
+                    <td><%= Date.strptime(fechas[:fecha_solicitud],"%d/%m/%Y")%></td>  
                     <td><strong>Fecha de Retiro:</strong></td>
-                    <td><%= humanizarFecha Date.parse (fechas[:fecha_retiro])%></td>                    
+                    <td><%= existe_fecha(Date.parse (fechas[:fecha_retiro]))%></td>                    
                     </tr>
                   <%end%>                   
                   </tr>
