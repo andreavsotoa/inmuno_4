@@ -1,0 +1,115 @@
+<style type="text/css">  
+   .form-group {
+   margin-bottom: 10px;
+   }
+</style>
+
+
+
+<div id="page-wrapper">
+      <div class="container-fluid">
+
+
+<%if @paciente.blank?%>
+      <%= render 'shared/dosFilasVistasPaciente', tituloVentana: "Histórico de Frascos solicitados y entregados" %>
+
+        <div class="row">
+          <div class="col-lg-3"></div>
+          <div class="col-lg-5">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title"></h3>
+                <div style="text-align: center">
+                  <h3 class="panel-title">Histórico de Frascos</h3>
+                </div>
+              </div>
+              <div class="panel-body">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                  <table class="table table-condensed">
+                  <tr>
+                  <% @hash_frascos.each do |frasco,fechas| %>
+                     <tr>
+                    <td><strong>Frasco:</strong></td>
+                    <td><%=frasco%></td>
+                    <td><strong>Fecha de Solicitud:</strong></td>
+                    <td><%= Date.strptime(fechas[:fecha_solicitud],"%d/%m/%Y")%></td>  
+                    <td><strong>Fecha de Retiro:</strong></td>
+                    <td><%= existe_fecha(Date.parse (fechas[:fecha_retiro]))%></td>                    
+                    </tr>
+                  <%end%>                   
+                  </tr>
+                  </table>
+                  </li>
+
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3"></div><!-- /.row -->
+
+
+
+        <div class="row">
+           <div class="col-sm-3"></div>
+          <div class="col-sm-5">
+            <%=link_to 'Regresar', buscarFrasco_administrator_pacientes_path %>
+          </div>
+          <div class="col-sm-3"></div>
+        </div><!-- /.row -->
+
+<%else%>
+
+<div id="page-wrapper">
+      <div class="container-fluid">
+      <%= render 'shared/dosFilasVistasPaciente', tituloVentana: "Histórico de Frascos solicitados y entregados" %>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-8">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title"></h3>
+                <div style="text-align: center">
+                  <h3 class="panel-title"><%="Histórico Frascos: "+@paciente.nombre+" "+@paciente.apellido%></h3>
+                </div>
+              </div>
+              <div class="panel-body">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                  <table class="table table-condensed">
+                  <tr>
+                  <% @hash_frascos.each do |frasco,fechas| %>
+                     <tr>
+                    <td><strong>Frasco:</strong></td>
+                    <td><%=frasco%></td>
+                    <td><strong>Fecha de Solicitud:</strong></td>
+                    <td><%=fechas[:fecha_solicitud]%></td>  
+                    <td><strong>Fecha de Retiro:</strong></td>
+                    <td><%=fechas[:fecha_retiro]%></td>                    
+                    </tr>
+                  <%end%>                   
+                  </tr>
+                  </table>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+         <div class="col-sm-3"></div>  
+        </div>
+       <!-- /.row -->
+
+        <div class="row">
+           <div class="col-sm-3"></div>
+          <div class="col-sm-6">
+            <%=link_to 'Regresar', paciente_path%>
+          </div>
+          <div class="col-sm-3"></div>
+        </div><!-- /.row -->
+
+<%end%>
+
+
+      </div><!-- /.container-fluid -->
+    </div><!-- /#page-wrapper -->    
