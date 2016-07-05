@@ -11,7 +11,7 @@
 
 
 <%if @paciente.blank?%>
-      <%= render 'shared/dosFilasVistas', tituloVentana: "Modificar datos personales" %>
+      <%= render 'shared/dosFilasVistas', tituloVentana: "Paciente" %>
 
         <div class="row">
           <div class="col-lg-3"></div>
@@ -182,7 +182,7 @@
            <div class="col-sm-3"></div>
           <div class="col-sm-6">
             <%= link_to 'Modificar', edit_paciente_registration_path(@paciente) %> |
-            <%=link_to 'Regresar', usuarios_list_path%>
+            <%=link_to 'Regresar', buscar_administrator_pacientes_path%>
           </div>
           <div class="col-sm-3"></div>
         </div><!-- /.row -->

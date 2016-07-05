@@ -62,6 +62,29 @@ def buscarFrasco
    
 end
 
+def buscarPruebas
+   @paciente = Paciente.new
+   @pacientes = Usuario.new
+   @@mensaje = ""
+
+  if params[:paciente]       
+      if (params[:paciente][:datoBuscar].present?)       
+          @pacientes = Usuario.aplicar_comparacion_campo(params[:paciente][:datoBuscar]) 
+          if @pacientes.class.to_s != "String"
+              @pacientes = @pacientes.paginate(:page => params[:page], :per_page => 10) 
+          else
+            flash.now[:alert] = @pacientes
+            @pacientes = nil
+            
+          end
+      else
+        flash.now[:alert] = "No ha colocado la información"
+        @pacientes = nil
+      end 
+   end
+   
+end
+
 
 def index
   @pacientes = Usuario.where(rol: 3)..last(2)

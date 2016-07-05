@@ -57,18 +57,24 @@ def showFrascos
   puts "ESTOY EN SHOW FRASCOS"
   @paciente = Usuario.find(params[:id])
   puts "FRASCOS DEL PACIENTE"
+  puts @paciente.frascos
   # EN @FRASCO ESTAN TANTOS STRINGS COMO FRASCOS TIENE EL PACIENTE
   @hash_frascos = {}
   if @paciente.frascos != nil
   lista_frascos = @paciente.frascos.split('$')
+  puts lista_frascos
   lista_frascos.each do |frasco,i|
     detalle_frasco = frasco.split('#')
+
+    puts detalle_frasco[2]
 
     if detalle_frasco[2].to_s[0] != 'S' and detalle_frasco[2].to_s[0] != 'N' and detalle_frasco[2].to_s[0] != 'R' 
       fecha_ret = cambiar_formato_fecha(detalle_frasco[2].to_s)
     else
       fecha_ret = detalle_frasco[2].to_s
     end
+
+
     fecha_sol = cambiar_formato_fecha(detalle_frasco[1].to_s)
 
     detalle = {:fecha_solicitud => fecha_sol,:fecha_retiro => fecha_ret}
@@ -83,6 +89,44 @@ def showFrascos
   build_resource({})
   self.resource = @paciente
   #render :editPaciente  
+end
+
+def showFrascosPaciente
+  puts "ESTOY EN SHOW FRASCOS PACIENTE"
+  @paciente = Usuario.find(params[:id])
+  puts "FRASCOS DEL PACIENTE"
+  puts @paciente.frascos
+  # EN @FRASCO ESTAN TANTOS STRINGS COMO FRASCOS TIENE EL PACIENTE
+  @hash_frascos = {}
+  if @paciente.frascos != nil
+  lista_frascos = @paciente.frascos.split('$')
+  puts lista_frascos
+  lista_frascos.each do |frasco,i|
+    detalle_frasco = frasco.split('#')
+
+    puts detalle_frasco[2]
+
+    if detalle_frasco[2].to_s[0] != 'S' and detalle_frasco[2].to_s[0] != 'N' and detalle_frasco[2].to_s[0] != 'R' 
+      fecha_ret = cambiar_formato_fecha(detalle_frasco[2].to_s)
+    else
+      fecha_ret = detalle_frasco[2].to_s
+    end
+
+
+    fecha_sol = cambiar_formato_fecha(detalle_frasco[1].to_s)
+
+    detalle = {:fecha_solicitud => fecha_sol,:fecha_retiro => fecha_ret}
+    num_frasco = detalle_frasco[0]
+    if num_frasco != nil
+      @hash_frascos[num_frasco.to_s] = detalle
+    end
+  end
+
+  end
+  puts @hash_frascos
+  #build_resource({})
+  #self.resource = @paciente
+  #render :showFrascosPaciente  
 end
 
 

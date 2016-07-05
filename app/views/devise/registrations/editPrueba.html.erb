@@ -3,12 +3,9 @@
    margin-bottom: 10px;
    }
 </style>
-
-<%=puts "AQUI10"%>
-
     <div id="page-wrapper">
       <div class="container-fluid">
-        <%= render 'shared/dosFilasVistas', tituloVentana: "Modificar Puebas Alérgicas del Paciente" %>
+        <%= render 'shared/dosFilasVistas', tituloVentana: "Puebas Alérgicas del Paciente" %>
         <!-- Page Heading -->       
         <div class="row" style= "margin-top:25px">
           <div class="col-lg-2"></div>
@@ -17,17 +14,15 @@
               <div class="panel-heading">
                 <h3 class="panel-title"></h3>
                 <div style="text-align: center">
-                  <h3 class="panel-title">Modificar Pruebas Alérgicas</h3>
+                  <h3 class="panel-title">Pruebas Alérgicas</h3>
                 </div>
-              </div>
+              </div><!-- panel -heading-->
               <div class="panel-body">
                 <div class="list-group">
-                <%puts "AQUI14"%>
+                <%puts "EDITPRUEBA VISTA"%>
 
                  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form-horizontal' }) do |f| %>
 
-                  <%#= simple_form_for(resource, as: resource_name, url: edit_paciente_registration_path(@paciente), html: { method: :put, class: 'form-horizontal' }) do |f| %>
-                  <%puts "AQUI15"%>
                    <%=f.input :id, :as => :hidden, :input_html => { :value => @paciente.id } %>
                    <%=f.input :origen, :as => :hidden, :input_html => { :value => "editPrueba" } %>
                      
@@ -45,9 +40,9 @@
                    
                     </div>
                   </div>
-                  <% end %>
+                  <%end %><!-- end if paciente.errors.any -->
 
-                     <div id="pruebas" >
+  <div id="pruebas" >
   <br />
   <div class="form-group">
    <label class="string optional control-label col-md-3">Fecha de las pruebas:</label>
@@ -96,21 +91,18 @@
       <%= f.input :blom, label: false, as: :string, :input_html => {value: @paciente.blom}%> 
     </div>
   </div>
-</div>  
 
-</div>
+</div><!-- id pruebas -->
                        
-                    
-
-
+              
 <div class="form-actions" align="center">
-<%= f.button :submit, "Modificar datos", :class=> "btn btn-primary" %>
+<%= f.button :submit, "Guardar", :class=> "btn btn-primary" %>
 </div>
 </div>
-<% end %>
-</div>
-            </div>
-         </div>
+<% end %> 
+</div><!-- panel body -->
+            </div><!-- panel panel primary -->
+         </div><!-- col lg 8 -->
          <div class="col-lg-2"></div>
          <!-- /.row -->
       </div>

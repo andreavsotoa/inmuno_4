@@ -6,6 +6,7 @@ Rails.application.routes.draw do
              get :buscar
              get :buscar_paciente
              get :buscarFrasco
+             get :buscarPruebas
        end
     end   
 
@@ -46,6 +47,7 @@ devise_scope :usuario do
   put 'usuarios/pacientes(.:format)'=> "registrations#update"
 
   get 'registrations/showFrascos/:id' => 'registrations#showFrascos', :as => "show_frascos_registration" 
+  get 'registrations/showFrascosPaciente/:id' => 'registrations#showFrascosPaciente', :as => "show_frascos_paciente_registration" 
 
   #get 'consulting/show/:id' => 'consultings#show', :as => "frascos_consulting" 
 ##'usuarios/edit_paciente', :to => 'registration#edit_paciente'
