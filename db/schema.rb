@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160301233139) do
+ActiveRecord::Schema.define(version: 20160705055818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,6 +114,17 @@ ActiveRecord::Schema.define(version: 20160301233139) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "solicituds", force: :cascade do |t|
+    t.integer  "numero_frasco"
+    t.string   "tipo_solicitud"
+    t.text     "comentario"
+    t.decimal  "monto_pendiente"
+    t.integer  "pago_id"
+    t.integer  "usuario_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
   create_table "tips", force: :cascade do |t|
     t.string   "titulo"
     t.text     "contenido"
@@ -167,6 +178,7 @@ ActiveRecord::Schema.define(version: 20160301233139) do
     t.string   "invited_by_type"
     t.integer  "invitations_count",      default: 0
     t.text     "frascos"
+    t.decimal  "balance"
   end
 
   add_index "usuarios", ["email"], name: "index_usuarios_on_email", using: :btree

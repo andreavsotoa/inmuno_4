@@ -51,15 +51,18 @@ Rails.application.configure do
   config.action_mailer.default charset: "utf-8"
 
   #en producción colocar la dirección del dominio
-  config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  config.action_mailer.default_url_options = { host: 'localhost' }
   config.assets.debug = true
 
   config.action_mailer.smtp_settings = { 
-    :address => "smtp.mandrillapp.com", 
-    :port => 587, 
-    :user_name => ENV["MANDRILL_USERNAME"], 
-    :password => ENV["MANDRILL_API_KEY"] 
-}
+    address: "smtp.gmail.com", 
+    port: 587, 
+    domain: "gmail.com",
+    user_name: "emailutilitario139@gmail.com", 
+    password: "4540p1712e17",
+    authentication: :plain,
+    :enable_starttls_auto => true
+  }
 
 Time::DATE_FORMATS[:custom_date] = "%d/%m/%Y"
 Time::DATE_FORMATS[:custom_datetime] = "%d/%m/%Y | %H:%M"

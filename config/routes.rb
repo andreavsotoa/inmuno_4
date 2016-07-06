@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  
   namespace :administrator do
     resource :pacientes do
        collection do
@@ -8,12 +7,12 @@ Rails.application.routes.draw do
              get :buscarFrasco
              get :buscarPruebas
        end
-    end   
+    end
 
     namespace :menu_nivel0 do
       resources :menu_nivel1s
     end
-    
+
     resources :pacientes
     resources :configurations
     resources :tips
@@ -21,13 +20,12 @@ Rails.application.routes.draw do
     resources :menu_nivel0s
     resources :contactos, only: [:index, :edit, :update, :destroy]
 
-   # get 'pacientes/buscar', :to => 'pacientes#buscar'
+    # get 'pacientes/buscar', :to => 'pacientes#buscar'
   end
 
-
-namespace :paciente do
- #  get 'pacientes' => 'pacientes#index', :as => "paciente"
-end
+  namespace :paciente do
+    # get 'pacientes' => 'pacientes#index', :as => "paciente"
+  end
 
 #get 'administrator/home/index' => 'administrator/home#index', :as => "admin"
 
@@ -53,64 +51,59 @@ devise_scope :usuario do
 ##'usuarios/edit_paciente', :to => 'registration#edit_paciente'
 end
 
-#patch 'registrations/editPaciente/:id(.:format)'=> "registrations#update"
+  # patch 'registrations/editPaciente/:id(.:format)'=> "registrations#update"
 
+  devise_for :usuarios, controllers: {registrations: "registrations", sessions: "sessions"}
 
-devise_for :usuarios, controllers: {registrations: "registrations", sessions: "sessions"}
-  
-mount Ckeditor::Engine => '/ckeditor'
+  mount Ckeditor::Engine => '/ckeditor'
 
-##  devise_scope :usuarios do
- #   get 'usuarios/edit_paciente', :to => 'registration#edit_paciente'
- #   get 'usuarios/edit_prueba', :to => 'registration#edit_prueba'
+  # devise_scope :usuarios do
+  #   get 'usuarios/edit_paciente', :to => 'registration#edit_paciente'
+  #   get 'usuarios/edit_prueba', :to => 'registration#edit_prueba'
+  # end
 
- # end
+  # resources :usuarios, only: [:index]
 
-#resources :usuarios, only: [:index]
-
-resource :usuario, only: [:edit] do
-  collection do
-    patch 'update_password'
+  resource :usuario, only: [:edit] do
+    collection do
+      patch 'update_password'
+    end
   end
-end
 
-#resources :cambiar_passwords, only: [:edit, :update]
+  # resources :cambiar_passwords, only: [:edit, :update]
 
-#devise_scope :usuario do
-#  get '/passwordusuarios/edit(.:format)' => "passwordusuarios#edit", :as => :cambiar_password
-#  patch '/passwordusuarios/(.:format)'=> "passwordusuarios#update"
-#  put '/passwordusuarios/(.:format)'=> "passwordusuarios#update"
-#end
+  # devise_scope :usuario do
+  #  get '/passwordusuarios/edit(.:format)' => "passwordusuarios#edit", :as => :cambiar_password
+  #  patch '/passwordusuarios/(.:format)'=> "passwordusuarios#update"
+  #  put '/passwordusuarios/(.:format)'=> "passwordusuarios#update"
+  # end
 
-get '/patients/:id', to: 'patients#show', as: 'patient'
+  get '/patients/:id', to: 'patients#show', as: 'patient'
 
+  resource :inbox, :controller => 'inbox', :only => [:show,:create]
 
-resource :inbox, :controller => 'inbox', :only => [:show,:create]
-
-PagesController.action_methods.each do |action|
-  if action!="faq" && action!="tip" && action!="contacto" && action!="opcionPrincipal" 
-  get "pages/contenido", to: "pages#contenido", as: "#{action}"
+  PagesController.action_methods.each do |action|
+    if action!="faq" && action!="tip" && action!="contacto" && action!="opcionPrincipal"
+      get "pages/contenido", to: "pages#contenido", as: "#{action}"
+    end
   end
-end
 
-get 'pages/faq' => 'pages#faq', as: :faq
-get 'pages/tip' => 'pages#tip', as: :tip
-#get 'pages/contacto' => 'pages#contacto', as: :contacto
+  get 'pages/faq' => 'pages#faq', as: :faq
+  get 'pages/tip' => 'pages#tip', as: :tip
+  # get 'pages/contacto' => 'pages#contacto', as: :contacto
 
-scope '/pages' do
-  resources :contactos, only: [:new, :create, :show]
-end
+  scope '/pages' do
+    resources :contactos, only: [:new, :create, :show]
+  end
 
-get 'administrator/home/index' => 'administrator/home#index', :as => "admin"
-get 'paciente/home/index' => 'paciente/pacientes#index', :as => "paciente"
+  get 'administrator/home/index' => 'administrator/home#index', :as => "admin"
+  get 'paciente/home/index' => 'paciente/pacientes#index', :as => "paciente"
 
+  root 'pages#home'
 
-root 'pages#home'
-
-
-
-#nuevas rutas del proyecto para la materia
-get 'ejemplo1' => 'paciente/pacientes#index'
-
-
+  # nuevas rutas del proyecto para la materia
+  get 'ejemplo1' => 'paciente/pacientes#index'
+  get 'vacunas/listar'
+  get 'vacunas/solicitar'
+  post 'vacunas/crear_solicitud'
 end

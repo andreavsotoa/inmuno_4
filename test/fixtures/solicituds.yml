@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  numero_frasco: 1
+  tipo_solicitud: MyString
+  comentario: MyText
+  monto_pendiente: 9.99
+  pago_id: 1
+  usuario_id: 1
+
+two:
+  numero_frasco: 1
+  tipo_solicitud: MyString
+  comentario: MyText
+  monto_pendiente: 9.99
+  pago_id: 1
+  usuario_id: 1

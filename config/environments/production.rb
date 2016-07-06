@@ -96,10 +96,10 @@ config.assets.digest = true
 config.action_mailer.default_url_options =   { :host => 'inmuno-dev.herokuapp.com' }
 config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = { 
-    :address => "smtp.mandrillapp.com", 
+    :address => "smtp.gmail.com", 
     :port => 587, 
-    :user_name => ENV["MANDRILL_USERNAME"], 
-    :password => ENV["MANDRILL_API_KEY"] 
+    :user_name => ENV["emailutilitario139@gmail.com"], 
+    :password => ENV["4540p1712e17"] 
 }
 
 Time::DATE_FORMATS[:custom_date] = "%d/%m/%Y"

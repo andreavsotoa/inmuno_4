@@ -1,2 +1,5 @@
-class Frasco < ActiveRecord::Base
+class Frasco
+  def self.precio
+    10
+  end
 end
