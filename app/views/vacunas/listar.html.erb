@@ -1,6 +1,6 @@
-<div id="page-wrapper" style="padding:50px 0">
+<div id="page-wrapper" style="padding:30px 0">
   <div class="container-fluid">
-    <%= render 'shared/menu_paciente', tituloVentana: 'Listado de Frascos' %>
+    <%= render 'shared/dosFilasVistasPaciente', tituloVentana: 'Listado de Frascos' %>
 
     <div class="row">
       <div class="col-lg-6 col-lg-offset-3">
@@ -20,8 +20,8 @@
                 <thead>
                   <tr>
                     <th>Nmero de Frasco</th>
-                    <th>Fecha de Retiro</th>
                     <th>Fecha de Solicitud</th>
+                    <th>Fecha de Retiro</th>
                     <th>Estado</th>
                   </tr>
                 </thead>
@@ -29,8 +29,8 @@
                   <% @frascos.each do |frasco| %>
                     <tr>
                       <td><%= frasco[:numero] %></td>
-                      <td><%= frasco[:fecha_retiro] %></td>
                       <td><%= frasco[:fecha_solicitud] %></td>
+                      <td><%= frasco[:fecha_retiro] %></td>
                       <td><%= frasco[:estado] %></td>
                     </tr>
                   <% end %>

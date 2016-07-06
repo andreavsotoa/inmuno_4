@@ -5,7 +5,7 @@ class Usuario < ActiveRecord::Base
   #       :recoverable, :rememberable, :trackable, :validatable
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
-  attr_accessor :saltar_validacion_usuario, :validar_usuario_nuevo
+attr_accessor :saltar_validacion_usuario, :validar_usuario_nuevo,:saltar_validacion_correo_principal,:saltar_validacion_fecha_nacimiento
 
   has_many :faqs
   has_many :tips
@@ -61,11 +61,11 @@ validates :email2, allow_blank: true,
                    format: {:with => VALID_EMAIL_REGEX, 
                             message: "El formato del correo electrónico alternativo es invalido"}
 
-  validates :email2_confirmation, presence: { message: 'Debe colocar la confirmación del correo alternativo' }, if: ":validar_usuario_nuevo and !email2.blank?", if: "saltar_validacion_correo_principal"
+validates :email2_confirmation, presence: {message: "Debe colocar la confirmación del correo alternativo"}, if: ":validar_usuario_nuevo and !email2.blank?", if: "saltar_validacion_correo_principal"
 
-  validates :email2, confirmation: { message: 'El correo alternativo no coincide con su confirmación' }, if: 'validar_usuario_nuevo and !email2.blank?'
+validates :email2, confirmation: {message: "El correo alternativo no coincide con su confirmación"}, if: ":validar_usuario_nuevo and !email2.blank?"
 
-  validate :presencia_de_algun_telefono, unless: :saltar_validacion_usuario
+validate :presencia_de_algun_telefono, unless: :saltar_validacion_usuario
 
 
   #SE MODIFICO LO SIGUIENTE
@@ -170,7 +170,16 @@ validates :email2, allow_blank: true,
     frascos_string = read_attribute(:frascos).split('$').drop(1)
     frascos_string.map do |frasco_string|
       array = frasco_string.split('#')
-      hash = { numero: array[0].to_i, fecha_retiro: array[1], fecha_solicitud: array[2] }
+
+
+    if array[2].to_s[0] != 'S' and array[2].to_s[0] != 'N' and array[2].to_s[0] != 'R' 
+      fecha_ret = cambiar_formato_fecha(array[2].to_s)
+    else
+      fecha_ret = array[2].to_s
+    end
+    fecha_sol = cambiar_formato_fecha(array[1].to_s)
+
+      hash = { numero: array[0].to_i, fecha_solicitud: fecha_sol, fecha_retiro: fecha_ret }
       hash[:estado] = array[3] unless array[3].nil?
       hash
     end
@@ -179,9 +188,9 @@ validates :email2, allow_blank: true,
   def lista_frascos=(lista_frascos)
     lista_frascos_string = lista_frascos.map do |frasco|
       if hash[:estado].present?
-        "$#{frasco[:numero]}##{frasco[:fecha_retiro]}##{frasco[:fecha_solicitud]}"
+        "$#{frasco[:numero]}##{frasco[:fecha_solicitud]}##{frasco[:fecha_retiro]}"
       else
-        "$#{frasco[:numero]}##{frasco[:fecha_retiro]}##{frasco[:fecha_solicitud]}##{frasco[:estado]}"
+        "$#{frasco[:numero]}##{frasco[:fecha_solicitud]}##{frasco[:fecha_retiro]}##{frasco[:estado]}"
       end
     end
     write_attribute(:frascos, lista_frascos_string.join)
@@ -197,8 +206,8 @@ validates :email2, allow_blank: true,
     nuevos_frascos.each do |frasco|
       i += 1
       nuevo_frasco = { numero: i }
-      nuevo_frasco [:fecha_retiro]
       nuevo_frasco [:fecha_solicitud]
+      nuevo_frasco [:fecha_retiro]
       nuevo_frasco [:estado]
       lista_frascos << nuevo_frasco
     end
@@ -226,5 +235,9 @@ validates :email2, allow_blank: true,
     if [self.telefono_habitacion, self.telefono_trabajo, self.celular1, self.celular2 ].reject(&:blank?).size == 0
       errors.add(:telefono_habitacion, "Debe colocar al menos un teléfono de contacto")
     end
+  end
+
+  def cambiar_formato_fecha(fecha_s)
+      fecha_s[8..9].to_s<<"-"<<fecha_s[5..6].to_s<<"-"<<fecha_s[0..3].to_s
   end
 end
