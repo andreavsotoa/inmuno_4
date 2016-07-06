@@ -28,7 +28,6 @@
                 <th>E-mail</th>
                 <th style="text-align: center">Ver</th>
                 <th style="text-align: center">Editar</th>
-                <th style="text-align: center">Editar Pruebas</th>
                 <th style="text-align: center">Eliminar</th>
             </tr>
         </thead>
@@ -40,10 +39,15 @@
                 <td><%=paciente.cedula%></td>
                 <td><%=paciente.apellido + ", "+ paciente.nombre%></td>
                 <td><%=paciente.email%></td>
-                <td>
+                <td><%#= link_to edit_task_path(task), remote: true do %>
                 <div align="center">
-                <a data-toggle="collapse" data-parent="#accordion-<%=i.to_s%>" href="#collapse1-<%=i.to_s%>"><span class="fa fa-fw fa-search"></span></a>
-                </div>
+                <%=link_to usuario_registration_path(paciente),
+                    title: 'Ver los datos del paciente',
+                     'data-toggle' => 'tooltip',
+                     'data-placement' => 'right' do %>
+                    <span class="fa fa-fw fa-pencil"></span>
+                    <%end%>
+                    </div>
                 </td>
                 <td><%#= link_to edit_task_path(task), remote: true do %>
                 <div align="center">
@@ -55,16 +59,6 @@
                     <%end%>
                     </div>
 				</td>
-         <td><%#= link_to edit_task_path(task), remote: true do %>
-          <div align="center">
-          <%=link_to edit_prueba_registration_path(paciente),
-              title: 'Editar los datos de las pruebas alérgicas',
-               'data-toggle' => 'tooltip',
-               'data-placement' => 'right' do %>
-              <span class="fa fa-fw fa-pencil"></span>
-              <%end%>
-        </div>
-        </td>
 				<td>		
 				<div align="center">
  				<%=link_to  administrator_faq_path(paciente), method: :delete, 

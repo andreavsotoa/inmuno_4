@@ -40,11 +40,11 @@ gem 'sprockets-rails', :require => 'sprockets/railtie'
 
 #PARA SUBIR IMAGENES A AMAZON S3
 # for aws cloud storage
-gem 'fog'
+#gem 'fog'
 # photo resizing
 gem "mini_magick"
 # file upload solution
-gem 'carrierwave'
+#gem 'carrierwave'
 
 #para la generación de menu de navegación dinamico
 gem 'simple-navigation'

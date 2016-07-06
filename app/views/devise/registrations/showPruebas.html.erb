@@ -11,7 +11,7 @@
 
 
 <%if @paciente.blank?%>
-      <%= render 'shared/dosFilasVistas', tituloVentana: "Paciente" %>
+      <%= render 'shared/dosFilasVistas', tituloVentana: "Modificar datos personales" %>
 
         <div class="row">
           <div class="col-lg-3"></div>
@@ -58,8 +58,7 @@
         <div class="row">
            <div class="col-sm-3"></div>
           <div class="col-sm-5">
-            <%= link_to 'Modificar', edit_usuario_registration_path %> |
-            <%=link_to 'Regresar', admin_path %>
+            <%=link_to 'Regresar', buscarPruebas_administrator_pacientes_path %>
           </div>
           <div class="col-sm-3"></div>
         </div><!-- /.row -->
@@ -96,40 +95,10 @@
                   <tr>
                     <td><strong>Nombres:</strong></td>
                     <td><%=@paciente.nombre%></td>
-                    <td><strong>apellidos:</strong></td>
+                    <td><strong>Apellidos:</strong></td>
                     <td><%=@paciente.apellido%></td>                    
                   </tr>
-                  <tr>
-                    <td><strong>C.I.:</strong></td>
-                    <td><%=@paciente.cedula%></td>
-                    <td><strong>Fecha de nacimiento:</strong></td>
-                    <td><%=@paciente.fecha_nacimiento%></td>                    
-                  </tr>
-                  <tr>
-                    <td><strong>Telefono Hab.:</strong></td>
-                    <td><%=@paciente.telefono_habitacion%></td>
-                    <td><strong>Telefono Oficina:</strong></td>
-                    <td><%=@paciente.telefono_trabajo%></td>                    
-                  </tr>
-                  <tr>
-                    <td><strong>Celular 1:</strong></td>
-                    <td><%=@paciente.celular1%></td>
-                    <td><strong>Celular 2:</strong></td>
-                    <td><%=@paciente.celular2%></td>                    
-                  </tr>
-                  <tr>
-                    <td><strong>E-mail principal:</strong></td>
-                    <td><%=@paciente.email%></td>
-                    <td><strong>E-mail alternativo:</strong></td>
-                    <td><%=@paciente.email2%></td>                    
-                  </tr>
-                  <tr>
-                    <td><strong>Celular 1:</strong></td>
-                    <td><%=@paciente.celular1%></td>
-                    <td><strong>Celular 2:</strong></td>
-                    <td><%=@paciente.celular2%></td>                    
-                  </tr>
-                  <tr class="success">
+                  <tr >
                     <td  colspan = "4"><strong>Pruebas alérgicas:</strong>
                     <%if @paciente.fecha_pruebas != nil%>                      
                       <%=@paciente.fecha_pruebas%>
@@ -181,8 +150,7 @@
         <div class="row">
            <div class="col-sm-3"></div>
           <div class="col-sm-6">
-            <%= link_to 'Modificar', edit_paciente_registration_path(@paciente) %> |
-            <%=link_to 'Regresar', buscar_administrator_pacientes_path%>
+            <%=link_to 'Regresar', buscarPruebas_administrator_pacientes_path%>
           </div>
           <div class="col-sm-3"></div>
         </div><!-- /.row -->

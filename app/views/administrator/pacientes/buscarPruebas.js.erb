@@ -1,0 +1,8 @@
+<%puts "_BUSCAR"%>
+
+
+<%#if @pacientes.present? %>
+$('#pacientes').html("<%= escape_javascript(render('pacientesPruebas')) %>");
+$('#pacientes').show();
+<%#end%>
+

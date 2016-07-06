@@ -1,3 +1,4 @@
+
 # Devise:: le estamos indicando que herede de devise.
 #no se va a escribir el código del controlador de devise sino que vamos a modificar #solamente lo que el padre (devise) haría.
 #luego es nesario que el router se modifique para que utilice el nuevo controlador
@@ -7,6 +8,7 @@ prepend_before_filter :require_no_authentication, only: [ :cancel]
 prepend_before_filter :authenticate_scope!, only: [:edit, :update, :destroy]
 skip_before_filter :require_no_authentication, :only => [:create, :update]
 before_action :cargarOpcionesDelPrincipal
+require 'date'
 
 include CodigosGenerales
 layout :colocar_layout
@@ -54,17 +56,124 @@ end
 def showFrascos
   puts "ESTOY EN SHOW FRASCOS"
   @paciente = Usuario.find(params[:id])
-  #puts @paciente
-  #puts "FRASCOS"
+  puts "FRASCOS DEL PACIENTE"
+  puts @paciente.frascos
+  # EN @FRASCO ESTAN TANTOS STRINGS COMO FRASCOS TIENE EL PACIENTE
+  @hash_frascos = {}
+  if @paciente.frascos != nil
+  lista_frascos = @paciente.frascos.split('$')
+  puts lista_frascos
+  lista_frascos.each do |frasco,i|
+    detalle_frasco = frasco.split('#')
+
+    puts detalle_frasco[2]
+
+    if detalle_frasco[2].to_s[0] != 'S' and detalle_frasco[2].to_s[0] != 'N' and detalle_frasco[2].to_s[0] != 'R' 
+      fecha_ret = cambiar_formato_fecha(detalle_frasco[2].to_s)
+    else
+      fecha_ret = detalle_frasco[2].to_s
+    end
+
+
+    fecha_sol = cambiar_formato_fecha(detalle_frasco[1].to_s)
+
+    detalle = {:fecha_solicitud => fecha_sol,:fecha_retiro => fecha_ret}
+    num_frasco = detalle_frasco[0]
+    if num_frasco != nil
+      @hash_frascos[num_frasco.to_s] = detalle
+    end
+  end
+
+  end
+  puts @hash_frascos
   build_resource({})
   self.resource = @paciente
   #render :editPaciente  
+end
+
+def showFrascosPaciente
+  puts "ESTOY EN SHOW FRASCOS PACIENTE"
+  @paciente = Usuario.find(params[:id])
+  puts "FRASCOS DEL PACIENTE"
+  puts @paciente.frascos
+  # EN @FRASCO ESTAN TANTOS STRINGS COMO FRASCOS TIENE EL PACIENTE
+  @hash_frascos = {}
+  if @paciente.frascos != nil
+  lista_frascos = @paciente.frascos.split('$')
+  puts lista_frascos
+  lista_frascos.each do |frasco,i|
+    detalle_frasco = frasco.split('#')
+
+    puts detalle_frasco[2]
+
+    if detalle_frasco[2].to_s[0] != 'S' and detalle_frasco[2].to_s[0] != 'N' and detalle_frasco[2].to_s[0] != 'R' 
+      fecha_ret = cambiar_formato_fecha(detalle_frasco[2].to_s)
+    else
+      fecha_ret = detalle_frasco[2].to_s
+    end
+
+
+    fecha_sol = cambiar_formato_fecha(detalle_frasco[1].to_s)
+
+    detalle = {:fecha_solicitud => fecha_sol,:fecha_retiro => fecha_ret}
+    num_frasco = detalle_frasco[0]
+    if num_frasco != nil
+      @hash_frascos[num_frasco.to_s] = detalle
+    end
+  end
+
+  end
+  puts @hash_frascos
+  #build_resource({})
+  #self.resource = @paciente
+  #render :showFrascosPaciente  
 end
 
 
 def update
   puts "UPDATE"
   puts params[:usuario][:id]
+  puts "OCULTO"
+  puts params[:usuario][:origen]
+  if "editPrueba".eql? params[:usuario][:origen]
+    puts "CAI EN EL IF"
+     @paciente = Usuario.find(params[:usuario][:id])
+  if @paciente != current_usuario
+    @numero_paciente = Usuario.last.numero_excel.to_i + 1
+    #estado = 1 PENDIENTE
+    params[:usuario][:estado] = 1
+    if params[:usuario][:ava].blank? and 
+      params[:usuario][:cuc].blank? and 
+      params[:usuario][:hong].blank? and 
+      params[:usuario][:berm].blank? and
+      params[:usuario][:john].blank? and
+      params[:usuario][:aso].blank? and
+      params[:usuario][:blom].blank?  
+      params[:usuario][:fecha_pruebas] = nil     
+    end
+
+    @paciente = Usuario.find(params[:usuario][:id])
+    self.resource = @paciente
+    self.resource.saltar_validacion_fecha_nacimiento = false
+    self.resource.validar_usuario_nuevo = false
+    self.resource.saltar_validacion_correo_principal = false
+
+  if self.resource.update_without_password(account_update_params)
+        flash.now[:notice] = "Las pruebas alérgicas del paciente fueron modificadas correctamente"
+        #redirect_to usuario_registration_pruebas_path(@paciente.id)
+        render :showPruebas
+        #format.json { head :no_content }
+      else
+        #format.html { render :editPaciente }
+        puts "ELSE DEL IF"
+        render :editPrueba
+        #format.json { render json: @paciente.errors, status: :unprocessable_entity }
+      end
+    #end
+    
+
+  end 
+  else
   @paciente = Usuario.find(params[:usuario][:id])
   if @paciente != current_usuario
     @numero_paciente = Usuario.last.numero_excel.to_i + 1
@@ -88,6 +197,7 @@ def update
     @paciente = Usuario.find(params[:usuario][:id])
     self.resource = @paciente
     self.resource.saltar_validacion_usuario = false
+    self.resource.saltar_validacion_correo_principal = false
 
     #respond_to do |format|
     #
@@ -106,7 +216,8 @@ def update
       end
     end
     #end
-  end  
+  end 
+  end 
 end 
 
 def create
@@ -145,6 +256,10 @@ def create
 end
 
 def show
+   @paciente = Usuario.find(params[:format])
+end
+
+def showPruebas
    @paciente = Usuario.find(params[:format])
 end
 
@@ -236,12 +351,28 @@ params.require(:usuario).permit(
            :fecha_pruebas)
 end
 
+def pruebas_update_params
+  puts params[:usuario][:nombre]
+
+params.require(:usuario).permit(
+           :ava,
+           :cuc,
+           :hong,
+           :berm,
+           :john,
+           :asp,
+           :blom,
+           :rol,
+           :fecha_pruebas)
+end
+
 #el siguiente método permite customizar el redirect despues de actualizar
 #los datos personales
   def after_update_path_for(resource)
     adminHome_path(resource)
   end
 
-
-
+  def cambiar_formato_fecha(fecha_s)
+      fecha_s[8..9].to_s<<"-"<<fecha_s[5..6].to_s<<"-"<<fecha_s[0..3].to_s
+  end
 end

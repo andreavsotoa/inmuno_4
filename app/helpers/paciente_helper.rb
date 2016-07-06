@@ -12,10 +12,11 @@ module PacienteHelper
 		if fecha.nil?
 			""
 		else
-			#puts "AA#{fecha}AA"
-			#puts fecha.strftime("%d/%m/%Y")
-			 fecha.strftime("%d/%m/%Y")	
-			 fecha
+			puts "FECHA QUE LLEGA AL FORMULARIO"
+			puts fecha
+			puts fecha.strftime("%d/%m/%Y")
+			fecha.strftime("%d/%m/%Y")	
+			#fecha
 		end
 	end
 

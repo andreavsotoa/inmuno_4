@@ -32,6 +32,19 @@
                      
                      <%= f.error_notification %>
 
+                      <% if @usuario.errors.any? %>
+                    <div class="alert alert-danger">
+                    <div class="error_explanation">
+                      <ul>
+                        <% resource.errors.each do |attr,msg| %>
+                        <li><%= "#{msg}" if @usuario.errors[attr].first == msg %> </li>
+                       <% end %>
+                   
+                      </ul>
+                   
+                    </div>
+                  </div>
+                  <% end %>
 
                        <div class="form-group">
                         <label class="control-label col-md-2" ><abbr title="required">*</abbr> Historia N.:</label>
