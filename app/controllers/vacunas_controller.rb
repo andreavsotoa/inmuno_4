@@ -5,7 +5,7 @@ class VacunasController < ApplicationController
     @nombre = current_usuario.nombre
     @email = current_usuario.email
     @apellido = current_usuario.apellido
-    if @solicitud.tipo_solicitud == 'casoespecial'
+    if @solicitud.tipo_solicitud == 'casoespecial'  && !@solicitud.comentario.blank?
       SolicitudMailer.solicitud_especial(@solicitud.comentario, @nombre, @apellido, @email).deliver_now
     end
 
@@ -31,6 +31,11 @@ class VacunasController < ApplicationController
     end
 
     success = true
+
+    if @solicitud.comentario.blank?
+      success = false
+    end
+
     begin
       ActiveRecord::Base.transaction do
         @solicitud.save!
