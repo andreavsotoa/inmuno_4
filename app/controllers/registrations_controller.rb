@@ -158,7 +158,7 @@ def update
     self.resource.validar_usuario_nuevo = false
     self.resource.saltar_validacion_correo_principal = false
 
-  if self.resource.update_without_password(account_update_params)
+  if self.resource.update_without_password(pruebas_update_params)
         flash.now[:notice] = "Las pruebas alérgicas del paciente fueron modificadas correctamente"
         #redirect_to usuario_registration_pruebas_path(@paciente.id)
         render :showPruebas
