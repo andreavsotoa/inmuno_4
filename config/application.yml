@@ -19,7 +19,7 @@ OWNER_EMAIL: Propietario de e-mail
 
 #DATOS PARA LA BASE DE DATOS
 USERNAME_DB: andrea
-PASSWORD_DB: as20914190
+PASSWORD_DB: 'as20914190'
 
 #cambiar por el correo corporativo admin@alerasin.com
 MANDRILL_USERNAME: tecnodetalles@gmail.com

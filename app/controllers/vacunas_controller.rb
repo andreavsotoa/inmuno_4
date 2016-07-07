@@ -2,8 +2,11 @@ class VacunasController < ApplicationController
   def crear_solicitud
     @solicitud = Solicitud.new(solicitud_params.except(:pago))
     @solicitud.monto_pendiente = Frasco.precio
+    @nombre = current_usuario.nombre
+    @email = current_usuario.email
+    @apellido = current_usuario.apellido
     if @solicitud.tipo_solicitud == 'casoespecial'
-      SolicitudMailer.solicitud_especial(@solicitud.comentario).deliver_now
+      SolicitudMailer.solicitud_especial(@solicitud.comentario, @nombre, @apellido, @email).deliver_now
     end
 
     if current_usuario.balance.present? && current_usuario.balance > @solicitud.monto_pendiente

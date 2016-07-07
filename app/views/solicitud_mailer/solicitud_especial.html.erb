@@ -4,10 +4,10 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Usted ha recibido una solicitud de frasco especial por el usuario boris</h1>
+    <h4>Usted ha recibido una solicitud de frasco especial por el usuario <%= @nombre %> <%= @apellido%></h4>
     <p>
       Mensaje: <%= @comentario %>.<br>
     </p>
-    <p>Mensaje enviado desde servicio instantaneo.</p>
+    <p>Mensaje enviado desde servicio instantaneo <%= @email %>. </p>
   </body>
 </html>
