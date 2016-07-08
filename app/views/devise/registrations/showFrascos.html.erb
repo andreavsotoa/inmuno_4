@@ -35,7 +35,7 @@
                     <td><strong>Fecha de Solicitud:</strong></td>
                     <td><%= Date.strptime(fechas[:fecha_solicitud],"%d/%m/%Y")%></td>  
                     <td><strong>Fecha de Retiro:</strong></td>
-                    <td><%= existe_fecha(Date.parse (fechas[:fecha_retiro]))%></td>                    
+                    <td><%= existe_fecha(Date.parse (fechas[:fecha_retiro]))%></td>                  
                     </tr>
                   <%end%>                   
                   </tr>
@@ -79,14 +79,14 @@
                   <li class="list-group-item">
                   <table class="table table-condensed">
                   <tr>
-                  <% @hash_frascos.each do |frasco,fechas| %>
+                  <% @hash_frascos.each do |frasco| %>
                      <tr>
                     <td><strong>Frasco:</strong></td>
-                    <td><%=frasco%></td>
+                    <td><%=frasco%></td> 
                     <td><strong>Fecha de Solicitud:</strong></td>
-                    <td><%=fechas[:fecha_solicitud]%></td>  
+                    <td><%= @hash_original[frasco][:fecha_solicitud]%></td>  
                     <td><strong>Fecha de Retiro:</strong></td>
-                    <td><%=fechas[:fecha_retiro]%></td>                    
+                    <td><%= @hash_original[frasco][:fecha_solicitud]%></td>  
                     </tr>
                   <%end%>                   
                   </tr>
@@ -99,7 +99,6 @@
          <div class="col-sm-3"></div>  
         </div>
        <!-- /.row -->
-
         <div class="row">
            <div class="col-sm-3"></div>
           <div class="col-sm-6">
@@ -107,6 +106,20 @@
           </div>
           <div class="col-sm-3"></div>
         </div><!-- /.row -->
+
+        <!--el siguiente código coloca la páginación sin estilos -->
+<div id="page_links">
+    <%#= paginate @pacientes %>
+</div>
+
+<!-- la siguiente instrucción carga la páginación con bootstrap-->
+
+<div style="text-align:center">
+<%= will_paginate @hash_frascos, renderer: BootstrapPagination::Rails %>
+</div>
+<!-- o también
+
+<%#= js_will_paginate @pacientes %>
 
 <%end%>
 

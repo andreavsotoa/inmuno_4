@@ -9,6 +9,7 @@ prepend_before_filter :authenticate_scope!, only: [:edit, :update, :destroy]
 skip_before_filter :require_no_authentication, :only => [:create, :update]
 before_action :cargarOpcionesDelPrincipal
 require 'date'
+require 'will_paginate/array'
 
 include CodigosGenerales
 layout :colocar_layout
@@ -83,16 +84,20 @@ def showFrascos
       @hash_frascos[num_frasco.to_s] = detalle
     end
   end
+  #@hash_frascos.keys.paginate(page: params[:page],per_page: 2)
+  @hash_original = @hash_frascos
+  puts "POS 1"
+  puts @hash_original["1"][:fecha_solicitud]
 
-  end
-  puts @hash_frascos
+  @hash_frascos = @hash_frascos.keys.paginate(page: params[:page],per_page: 5)
+  #puts @hash_frascos
   build_resource({})
   self.resource = @paciente
-  #render :editPaciente  
+end
 end
 
 def showFrascosPaciente
-  puts "ESTOY EN SHOW FRASCOS PACIENTE"
+  puts "ESTOY EN SHOW FRASCOS"
   @paciente = Usuario.find(params[:id])
   puts "FRASCOS DEL PACIENTE"
   puts @paciente.frascos
@@ -121,14 +126,17 @@ def showFrascosPaciente
       @hash_frascos[num_frasco.to_s] = detalle
     end
   end
+  #@hash_frascos.keys.paginate(page: params[:page],per_page: 2)
+  @hash_original = @hash_frascos
+  puts "POS 1"
+  puts @hash_original["1"][:fecha_solicitud]
 
-  end
-  puts @hash_frascos
-  #build_resource({})
-  #self.resource = @paciente
-  #render :showFrascosPaciente  
+  @hash_frascos = @hash_frascos.keys.paginate(page: params[:page],per_page: 5)
+  #puts @hash_frascos
+  build_resource({})
+  self.resource = @paciente
 end
-
+end
 
 def update
   puts "UPDATE"

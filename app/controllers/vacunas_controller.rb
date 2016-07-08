@@ -17,7 +17,7 @@ class VacunasController < ApplicationController
       current_usuario.update_attribute(:balance, 0)
     end
 
-    if @solicitud.pagar.present? && @solicitud.pagar == '1'
+    if @solicitud.pagar.present? && @solicitud.pagar == '1' 
       @pago = Pago.new(solicitud_params[:pago])
       @pago.usuarios_id = current_usuario.id
       @solicitud.pago = @pago
@@ -32,7 +32,7 @@ class VacunasController < ApplicationController
 
     success = true
 
-    if @solicitud.comentario.blank?
+    if @solicitud.comentario.blank? && @solicitud.tipo_solicitud == 'casoespecial'
       success = false
     end
 

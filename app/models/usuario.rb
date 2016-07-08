@@ -200,6 +200,10 @@ validate :presencia_de_algun_telefono, unless: :saltar_validacion_usuario
     !(ava.nil? || cuc.nil? || hong.nil? || berm.nil? || john.nil? || asp.nil? || blom.nil?)
   end
 
+  def ultimo_frasco
+        i = frascos.size
+  end 
+
   def agregar_frascos(nuevos_frascos)
     i = frascos.size
     lista_frascos = []
